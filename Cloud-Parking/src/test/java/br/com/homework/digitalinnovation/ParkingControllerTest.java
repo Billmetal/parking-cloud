@@ -12,7 +12,7 @@ import br.com.homework.digitalinnovation.controller.dto.ParkingCreateDTO;
 import io.restassured.RestAssured;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ParkingControllerTest {
+public class ParkingControllerTest extends AbstractContainerBase{
 	
 	@LocalServerPort
 	private int randomPort;
@@ -25,6 +25,7 @@ public class ParkingControllerTest {
 	@Test
 	void whenFindAllThenCheckResult() {
 		RestAssured.given()
+		.auth().basic("user", "Dio@123456")
 		.when().get("/parking").then()
 		.statusCode(HttpStatus.OK.value());
 	}
@@ -39,6 +40,7 @@ public class ParkingControllerTest {
         createDTO.setState("SP");
 		
 		RestAssured.given()
+		.auth().basic("user", "Dio@123456")
 		.when()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .body(createDTO)
